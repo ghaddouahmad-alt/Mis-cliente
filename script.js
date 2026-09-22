@@ -96,6 +96,16 @@ function editarCliente(indice) {
 }
 
 function eliminarCliente(indice) {
+  const cliente = clientes[indice];
+
+  const confirmar = confirm(
+    "¿Seguro que quieres eliminar a " + cliente.nombre + "?"
+  );
+
+  if (!confirmar) {
+    return;
+  }
+
   clientes.splice(indice, 1);
   guardar();
   mostrar();
