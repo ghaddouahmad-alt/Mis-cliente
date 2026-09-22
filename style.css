@@ -1,60 +1,96 @@
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f3f6f9;
   margin: 0;
   padding: 20px;
-}
-
-.app {
-  max-width: 600px;
-  margin: auto;
+  color: #222;
 }
 
 h1 {
   text-align: center;
+  margin: 10px 0 25px;
+  font-size: 32px;
 }
 
 input {
   width: 100%;
-  box-sizing: border-box;
-  padding: 14px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #d5dbe1;
+  border-radius: 12px;
   font-size: 16px;
+  background: white;
+}
+
+input:focus {
+  outline: none;
+  border-color: #333;
 }
 
 button {
-  padding: 10px 14px;
-  margin: 5px 3px 5px 0;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 11px 15px;
+  margin: 5px 3px 5px 0;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .add {
   width: 100%;
+  padding: 15px;
   background: #222;
   color: white;
-  padding: 14px;
-  font-size: 16px;
+  font-size: 17px;
+  margin-top: 5px;
 }
 
 #contador {
+  font-size: 18px;
   font-weight: bold;
-  margin-top: 20px;
+  margin: 25px 0 10px;
 }
 
 #lista {
-  padding: 0;
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 #lista li {
   background: white;
-  margin-top: 10px;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+#lista button {
+  background: #eef1f4;
+}
+
+#lista button:hover {
+  background: #dfe4e8;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  #lista li {
+    padding: 14px;
+  }
+
+  #lista button {
+    margin-top: 10px;
+  }
 }
