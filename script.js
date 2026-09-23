@@ -131,3 +131,35 @@ function abrirWhatsApp(telefono) {
 }
 
 mostrar();
+function hacerCopia() {
+  const datos = JSON.stringify(clientes, null, 2);
+  const archivo = new Blob([datos], { type: "application/json" });
+
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(archivo);
+  enlace.download = "mis-clientes-backup.json";
+  enlace.click();
+
+  URL.revokeObjectURL(enlace.href);
+}
+
+function importarCopia(evento) {
+  const archivo = evento.target.files[0];
+
+  if (!archivo) return;
+
+  const lector = new FileReader();
+
+  lector.onload = function() {
+    try {
+      clientes = JSON.parse(lector.result);
+      guardar();
+      mostrar();
+      alert("Copia restaurada correctamente");
+    } catch (error) {
+      alert("El archivo de copia no es válido");
+    }
+  };
+
+  lector.readAsText(archivo);
+}
