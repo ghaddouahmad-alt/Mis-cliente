@@ -22,7 +22,12 @@
   <button class="add" onclick="agregarCliente()">Añadir cliente</button>
 
   <p id="contador">0 clientes</p>
+<button onclick="hacerCopia()">💾 Guardar copia</button>
 
+<label>
+  📂 Restaurar copia
+  <input type="file" accept=".json" onchange="importarCopia(event)">
+</label>
   <ul id="lista"></ul>
 
   <script src="script.js"></script>
