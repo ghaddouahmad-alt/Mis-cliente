@@ -23,30 +23,37 @@ function mostrar(listaClientes = clientes) {
 
     const li = document.createElement("li");
 
-    li.appendChild(
-      document.createTextNode(
-        cliente.nombre + " - " + cliente.telefono + " "
-      )
-    );
+    const nombre = document.createElement("div");
+    nombre.textContent = "👤 " + cliente.nombre;
+    nombre.style.fontWeight = "bold";
+    nombre.style.fontSize = "18px";
+    nombre.style.marginBottom = "8px";
+
+    const telefono = document.createElement("div");
+    telefono.textContent = "📞 " + cliente.telefono;
+    telefono.style.marginBottom = "12px";
 
     const editar = document.createElement("button");
-    editar.textContent = "Editar";
+    editar.textContent = "✏️ Editar";
     editar.onclick = function() {
       editarCliente(indice);
     };
 
     const eliminar = document.createElement("button");
-    eliminar.textContent = "Eliminar";
+    eliminar.textContent = "🗑️ Eliminar";
     eliminar.onclick = function() {
       eliminarCliente(indice);
     };
 
     const whatsapp = document.createElement("button");
-    whatsapp.textContent = "WhatsApp";
+    whatsapp.textContent = "🟢 WhatsApp";
     whatsapp.onclick = function() {
-      abrirWhatsApp(cliente.telefono);
+      const numero = cliente.telefono.replace(/\D/g, "");
+      window.open("https://wa.me/" + numero, "_blank");
     };
 
+    li.appendChild(nombre);
+    li.appendChild(telefono);
     li.appendChild(editar);
     li.appendChild(eliminar);
     li.appendChild(whatsapp);
