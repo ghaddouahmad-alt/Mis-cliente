@@ -1,10 +1,6 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
   font-family: Arial, sans-serif;
-  background: #f3f6f9;
+  background: #f4f6f8;
   margin: 0;
   padding: 20px;
   color: #222;
@@ -12,15 +8,15 @@ body {
 
 h1 {
   text-align: center;
-  margin: 10px 0 25px;
-  font-size: 32px;
+  margin-bottom: 25px;
 }
 
 input {
   width: 100%;
-  padding: 15px;
+  box-sizing: border-box;
+  padding: 16px;
   margin-bottom: 12px;
-  border: 1px solid #d5dbe1;
+  border: 1px solid #d5d5d5;
   border-radius: 12px;
   font-size: 16px;
   background: white;
@@ -28,69 +24,51 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #333;
+  border-color: #222;
 }
 
 button {
   border: none;
   border-radius: 10px;
-  padding: 11px 15px;
+  padding: 12px 16px;
   margin: 5px 3px 5px 0;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 
 .add {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: #222;
   color: white;
   font-size: 17px;
-  margin-top: 5px;
+  margin-bottom: 20px;
 }
 
 #contador {
   font-size: 18px;
   font-weight: bold;
-  margin: 25px 0 10px;
+  margin: 20px 0 10px;
 }
 
 #lista {
-  list-style: none;
   padding: 0;
-  margin: 0;
+  list-style: none;
 }
 
 #lista li {
   background: white;
   margin-top: 12px;
-  padding: 16px;
-  border-radius: 14px;
+  padding: 18px;
+  border-radius: 15px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
 #lista button {
   background: #eef1f4;
+  color: #222;
 }
 
 #lista button:hover {
-  background: #dfe4e8;
-}
-
-@media (max-width: 600px) {
-  body {
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  #lista li {
-    padding: 14px;
-  }
-
-  #lista button {
-    margin-top: 10px;
-  }
+  background: #ddd;
 }
