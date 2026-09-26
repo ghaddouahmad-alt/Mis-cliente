@@ -90,6 +90,33 @@ function mostrar(listaClientes = clientes) {
 function agregarCliente() {
   const nombreInput = document.getElementById("nombre");
   const telefonoInput = document.getElementById("telefono");
+  const notaInput = document.getElementById("nota");
+
+  const nombre = nombreInput.value.trim();
+  const telefono = telefonoInput.value.trim();
+  const nota = notaInput.value.trim();
+
+  if (!nombre || !telefono) {
+    alert("Completa los datos");
+    return;
+  }
+
+  clientes.push({
+    nombre: nombre,
+    telefono: telefono,
+    nota: nota
+  });
+
+  guardar();
+
+  nombreInput.value = "";
+  telefonoInput.value = "";
+  notaInput.value = "";
+
+  mostrar();
+}
+  const nombreInput = document.getElementById("nombre");
+  const telefonoInput = document.getElementById("telefono");
 
   const nombre = nombreInput.value.trim();
   const telefono = telefonoInput.value.trim();
