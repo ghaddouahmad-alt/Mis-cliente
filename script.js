@@ -148,7 +148,14 @@ function eliminarCliente(indice) {
   guardar();
   mostrar();
 }
+function ordenarClientes() {
+  clientes.sort(function(a, b) {
+    return a.nombre.localeCompare(b.nombre);
+  });
 
+  guardar();
+  mostrar();
+}
 function buscarClientes() {
   const texto = document.getElementById("buscar").value
     .toLowerCase()
