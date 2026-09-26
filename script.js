@@ -46,7 +46,20 @@ function mostrar(listaClientes = clientes) {
     const telefono = document.createElement("div");
     telefono.textContent = "📞 " + cliente.telefono;
     telefono.style.marginBottom = "12px";
+const nota = document.createElement("div");
 
+if (cliente.nota) {
+  nota.textContent = "📝 " + cliente.nota;
+  nota.style.marginBottom = "12px";
+  nota.style.color = "#666";
+}
+
+li.appendChild(nombre);
+li.appendChild(telefono);
+
+if (cliente.nota) {
+  li.appendChild(nota);
+}
     const editar = document.createElement("button");
     editar.textContent = "✏️ Editar";
     editar.onclick = function() {
