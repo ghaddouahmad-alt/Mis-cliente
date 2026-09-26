@@ -72,3 +72,35 @@ button {
 #lista button:hover {
   background: #ddd;
 }
+.resumen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.tarjeta-resumen {
+  background: white;
+  padding: 18px 12px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.tarjeta-resumen span {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.tarjeta-resumen strong {
+  display: block;
+  font-size: 25px;
+}
+
+.tarjeta-resumen small {
+  display: block;
+  margin-top: 5px;
+  color: #666;
+  font-size: 14px;
+}
