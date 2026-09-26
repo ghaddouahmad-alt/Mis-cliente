@@ -4,22 +4,27 @@ function guardar() {
   localStorage.setItem("clientes", JSON.stringify(clientes));
 }
 
-function actualizarContador()
-    document.getElementById("totalResumen").textContent = clientes.length;
-
-  const conTelefono = clientes.filter(function(cliente) {
-    return cliente.telefono && cliente.telefono.trim() !== "";
-  }).length;
-
-  document.getElementById("telefonosResumen").textContent = conTelefono;
-{
-  
+function actualizarContador() {
   const contador = document.getElementById("contador");
 
-  if (clientes.length === 1) {
-    contador.textContent = "1 cliente";
-  } else {
-    contador.textContent = clientes.length + " clientes";
+  contador.textContent =
+    clientes.length === 1
+      ? "1 cliente"
+      : clientes.length + " clientes";
+
+  const totalResumen = document.getElementById("totalResumen");
+  const telefonosResumen = document.getElementById("telefonosResumen");
+
+  if (totalResumen) {
+    totalResumen.textContent = clientes.length;
+  }
+
+  if (telefonosResumen) {
+    const conTelefono = clientes.filter(function(cliente) {
+      return cliente.telefono && cliente.telefono.trim() !== "";
+    }).length;
+
+    telefonosResumen.textContent = conTelefono;
   }
 }
 
@@ -58,7 +63,16 @@ function mostrar(listaClientes = clientes) {
     whatsapp.textContent = "🟢 WhatsApp";
     whatsapp.onclick = function() {
       const numero = cliente.telefono.replace(/\D/g, "");
-      window.open("https://wa.me/" + numero, "_blank");
+
+      const numeroWhatsApp =
+        numero.startsWith("0")
+          ? "212" + numero.substring(1)
+          : numero;
+
+      window.open(
+        "https://wa.me/" + numeroWhatsApp,
+        "_blank"
+      );
     };
 
     li.appendChild(nombre);
@@ -74,8 +88,11 @@ function mostrar(listaClientes = clientes) {
 }
 
 function agregarCliente() {
-  const nombre = document.getElementById("nombre").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
+  const nombreInput = document.getElementById("nombre");
+  const telefonoInput = document.getElementById("telefono");
+
+  const nombre = nombreInput.value.trim();
+  const telefono = telefonoInput.value.trim();
 
   if (!nombre || !telefono) {
     alert("Completa los datos");
@@ -89,8 +106,8 @@ function agregarCliente() {
 
   guardar();
 
-  document.getElementById("nombre").value = "";
-  document.getElementById("telefono").value = "";
+  nombreInput.value = "";
+  telefonoInput.value = "";
 
   mostrar();
 }
@@ -104,6 +121,11 @@ function editarCliente(indice) {
   const nuevoTelefono = prompt("Teléfono:", cliente.telefono);
   if (nuevoTelefono === null) return;
 
+  if (!nuevoNombre.trim() || !nuevoTelefono.trim()) {
+    alert("Completa los datos");
+    return;
+  }
+
   cliente.nombre = nuevoNombre.trim();
   cliente.telefono = nuevoTelefono.trim();
 
@@ -112,23 +134,15 @@ function editarCliente(indice) {
 }
 
 function eliminarCliente(indice) {
-  const cliente = clientes[indice];
-
-  const confirmar = confirm(
-    "¿Seguro que quieres eliminar a " + cliente.nombre + "?"
-  );
-
-  if (!confirmar) {
-    return;
-  }
-
   clientes.splice(indice, 1);
   guardar();
   mostrar();
 }
 
 function buscarClientes() {
-  const texto = document.getElementById("buscar").value.toLowerCase();
+  const texto = document.getElementById("buscar").value
+    .toLowerCase()
+    .trim();
 
   const resultados = clientes.filter(function(cliente) {
     return (
@@ -140,42 +154,48 @@ function buscarClientes() {
   mostrar(resultados);
 }
 
-function abrirWhatsApp(telefono) {
-  const numero = telefono.replace(/\D/g, "");
-
-  window.open("https://wa.me/" + numero, "_blank");
-}
-
-mostrar();
-function hacerCopia() {
+function guardarCopia() {
   const datos = JSON.stringify(clientes, null, 2);
-  const archivo = new Blob([datos], { type: "application/json" });
+  const archivo = new Blob([datos], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(archivo);
 
   const enlace = document.createElement("a");
-  enlace.href = URL.createObjectURL(archivo);
+  enlace.href = url;
   enlace.download = "mis-clientes-backup.json";
   enlace.click();
 
-  URL.revokeObjectURL(enlace.href);
+  URL.revokeObjectURL(url);
 }
 
-function importarCopia(evento) {
-  const archivo = evento.target.files[0];
+function restaurarCopia(event) {
+  const archivo = event.target.files[0];
 
   if (!archivo) return;
 
   const lector = new FileReader();
 
-  lector.onload = function() {
+  lector.onload = function(e) {
     try {
-      clientes = JSON.parse(lector.result);
+      const datos = JSON.parse(e.target.result);
+
+      if (!Array.isArray(datos)) {
+        throw new Error("Formato inválido");
+      }
+
+      clientes = datos;
       guardar();
       mostrar();
+
       alert("Copia restaurada correctamente");
     } catch (error) {
-      alert("El archivo de copia no es válido");
+      alert("El archivo no es válido");
     }
   };
 
   lector.readAsText(archivo);
 }
+
+mostrar();
