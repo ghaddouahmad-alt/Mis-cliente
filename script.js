@@ -4,7 +4,16 @@ function guardar() {
   localStorage.setItem("clientes", JSON.stringify(clientes));
 }
 
-function actualizarContador() {
+function actualizarContador()
+    document.getElementById("totalResumen").textContent = clientes.length;
+
+  const conTelefono = clientes.filter(function(cliente) {
+    return cliente.telefono && cliente.telefono.trim() !== "";
+  }).length;
+
+  document.getElementById("telefonosResumen").textContent = conTelefono;
+{
+  
   const contador = document.getElementById("contador");
 
   if (clientes.length === 1) {
