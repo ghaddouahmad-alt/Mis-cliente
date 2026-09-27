@@ -57,7 +57,14 @@ function mostrar(listaClientes = clientes) {
       nota.style.color = "#666";
       li.appendChild(nota);
     }
-
+if (cliente.fecha) {
+  const fecha = document.createElement("div");
+  fecha.textContent = "📅 Añadido: " + cliente.fecha;
+  fecha.style.marginBottom = "12px";
+  fecha.style.color = "#888";
+  fecha.style.fontSize = "14px";
+  li.appendChild(fecha);
+}
     const editar = document.createElement("button");
     editar.textContent = "✏️ Editar";
     editar.onclick = function() {
