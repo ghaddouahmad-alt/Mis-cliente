@@ -111,10 +111,11 @@ function agregarCliente() {
   }
 
   clientes.push({
-    nombre: nombre,
-    telefono: telefono,
-    nota: nota
-  });
+  nombre: nombre,
+  telefono: telefono,
+  nota: nota,
+  fecha: new Date().toLocaleDateString("es-ES")
+});
 
   guardar();
 
