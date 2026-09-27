@@ -46,20 +46,18 @@ function mostrar(listaClientes = clientes) {
     const telefono = document.createElement("div");
     telefono.textContent = "📞 " + cliente.telefono;
     telefono.style.marginBottom = "12px";
-const nota = document.createElement("div");
 
-if (cliente.nota) {
-  nota.textContent = "📝 " + cliente.nota;
-  nota.style.marginBottom = "12px";
-  nota.style.color = "#666";
-}
+    li.appendChild(nombre);
+    li.appendChild(telefono);
 
-li.appendChild(nombre);
-li.appendChild(telefono);
+    if (cliente.nota) {
+      const nota = document.createElement("div");
+      nota.textContent = "📝 " + cliente.nota;
+      nota.style.marginBottom = "12px";
+      nota.style.color = "#666";
+      li.appendChild(nota);
+    }
 
-if (cliente.nota) {
-  li.appendChild(nota);
-}
     const editar = document.createElement("button");
     editar.textContent = "✏️ Editar";
     editar.onclick = function() {
@@ -88,8 +86,6 @@ if (cliente.nota) {
       );
     };
 
-    li.appendChild(nombre);
-    li.appendChild(telefono);
     li.appendChild(editar);
     li.appendChild(eliminar);
     li.appendChild(whatsapp);
@@ -107,7 +103,7 @@ function agregarCliente() {
 
   const nombre = nombreInput.value.trim();
   const telefono = telefonoInput.value.trim();
-  const nota = notaInput.value.trim();
+  const nota = notaInput ? notaInput.value.trim() : "";
 
   if (!nombre || !telefono) {
     alert("Completa los datos");
@@ -124,30 +120,10 @@ function agregarCliente() {
 
   nombreInput.value = "";
   telefonoInput.value = "";
-  notaInput.value = "";
 
-  mostrar();
-}
-  const nombreInput = document.getElementById("nombre");
-  const telefonoInput = document.getElementById("telefono");
-
-  const nombre = nombreInput.value.trim();
-  const telefono = telefonoInput.value.trim();
-
-  if (!nombre || !telefono) {
-    alert("Completa los datos");
-    return;
+  if (notaInput) {
+    notaInput.value = "";
   }
-
-  clientes.push({
-    nombre: nombre,
-    telefono: telefono
-  });
-
-  guardar();
-
-  nombreInput.value = "";
-  telefonoInput.value = "";
 
   mostrar();
 }
@@ -161,6 +137,13 @@ function editarCliente(indice) {
   const nuevoTelefono = prompt("Teléfono:", cliente.telefono);
   if (nuevoTelefono === null) return;
 
+  const nuevaNota = prompt(
+    "Nota:",
+    cliente.nota || ""
+  );
+
+  if (nuevaNota === null) return;
+
   if (!nuevoNombre.trim() || !nuevoTelefono.trim()) {
     alert("Completa los datos");
     return;
@@ -168,6 +151,7 @@ function editarCliente(indice) {
 
   cliente.nombre = nuevoNombre.trim();
   cliente.telefono = nuevoTelefono.trim();
+  cliente.nota = nuevaNota.trim();
 
   guardar();
   mostrar();
@@ -188,14 +172,7 @@ function eliminarCliente(indice) {
   guardar();
   mostrar();
 }
-function ordenarClientes() {
-  clientes.sort(function(a, b) {
-    return a.nombre.localeCompare(b.nombre);
-  });
 
-  guardar();
-  mostrar();
-}
 function buscarClientes() {
   const texto = document.getElementById("buscar").value
     .toLowerCase()
@@ -204,15 +181,26 @@ function buscarClientes() {
   const resultados = clientes.filter(function(cliente) {
     return (
       cliente.nombre.toLowerCase().includes(texto) ||
-      cliente.telefono.includes(texto)
+      cliente.telefono.includes(texto) ||
+      (cliente.nota || "").toLowerCase().includes(texto)
     );
   });
 
   mostrar(resultados);
 }
 
+function ordenarClientes() {
+  clientes.sort(function(a, b) {
+    return a.nombre.localeCompare(b.nombre);
+  });
+
+  guardar();
+  mostrar();
+}
+
 function guardarCopia() {
   const datos = JSON.stringify(clientes, null, 2);
+
   const archivo = new Blob([datos], {
     type: "application/json"
   });
