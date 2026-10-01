@@ -1,5 +1,26 @@
 let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+const SUPABASE_URL = https://utmfljhnnqezjqsybekq.supabase.com
+const SUPABASE_KEY = sb_publishable_hC3fRVw-Ap6YJJ23WAaqmA_-RomOjle
 
+let supabaseClient = null;
+
+const supabaseScript = document.createElement("script");
+
+supabaseScript.src =
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+supabaseScript.onload = function () {
+  const { createClient } = window.supabase;
+
+  supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("Supabase conectado");
+};
+
+document.head.appendChild(supabaseScript);
 function guardar() {
   localStorage.setItem("clientes", JSON.stringify(clientes));
 }
