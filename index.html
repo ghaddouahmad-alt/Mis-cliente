@@ -69,33 +69,3 @@
 
 </body>
 </html
-async function iniciarSesion() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const mensaje = document.getElementById("mensajeLogin");
-
-  if (!supabaseClient) {
-    mensaje.textContent = "Conectando con Supabase...";
-    return;
-  }
-
-  if (!email || !password) {
-    mensaje.textContent = "Completa el correo y la contraseña.";
-    return;
-  }
-
-  const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-  if (error) {
-    mensaje.textContent = "Correo o contraseña incorrectos.";
-    return;
-  }
-
-  mensaje.textContent = "¡Inicio de sesión correcto!";
-
-  document.getElementById("login").style.display = "none";
-}
