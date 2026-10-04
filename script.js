@@ -1,7 +1,6 @@
 let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
-const SUPABASE_URL = https://utmfljhnnqezjqsybekq.supabase.com
-const SUPABASE_KEY = sb_publishable_hC3fRVw-Ap6YJJ23WAaqmA_-RomOjle
-
+const SUPABASE_URL = "https://utmfljhnnqezjqsybekq.supabase.com";
+const SUPABASE_KEY = "TU_PUBLISHABLE_KEY";
 let supabaseClient = null;
 
 const supabaseScript = document.createElement("script");
