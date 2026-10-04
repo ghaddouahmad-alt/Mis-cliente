@@ -321,3 +321,27 @@ async function iniciarSesion() {
 
   document.getElementById("login").style.display = "none";
 }
+async function cargarClientesDesdeSupabase() {
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("clientes")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    alert("No se pudieron cargar los clientes");
+    return;
+  }
+
+  clientes = data;
+  mostrar();
+}
