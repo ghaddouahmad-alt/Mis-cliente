@@ -274,6 +274,7 @@ function restaurarCopia(event) {
 
 mostrar();
 async function iniciarSesion() {
+  alert("La función iniciarSesion funciona");
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const mensaje = document.getElementById("mensajeLogin");
