@@ -123,7 +123,7 @@ if (cliente.fecha) {
   actualizarContador();
 }
 
-function agregarCliente() {
+async function agregarCliente() {
   const nombreInput = document.getElementById("nombre");
   const telefonoInput = document.getElementById("telefono");
   const notaInput = document.getElementById("nota");
@@ -137,14 +137,30 @@ function agregarCliente() {
     return;
   }
 
-  clientes.push({
-  nombre: nombre,
-  telefono: telefono,
-  nota: nota,
-  fecha: new Date().toLocaleDateString("es-ES")
-});
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
 
-  guardar();
+  if (!user) {
+    alert("Debes iniciar sesión");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("clientes")
+    .insert({
+      user_id: user.id,
+      nombre: nombre,
+      telefono: telefono,
+      nota: nota,
+      fecha: new Date().toLocaleDateString("es-ES")
+    });
+
+  if (error) {
+    console.error(error);
+    alert("No se pudo guardar el cliente");
+    return;
+  }
 
   nombreInput.value = "";
   telefonoInput.value = "";
@@ -153,7 +169,9 @@ function agregarCliente() {
     notaInput.value = "";
   }
 
-  mostrar();
+  alert("Cliente guardado en la nube ☁️");
+
+  cargarClientesDesdeSupabase();
 }
 
 function editarCliente(indice) {
