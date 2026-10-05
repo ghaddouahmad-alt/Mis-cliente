@@ -313,9 +313,10 @@ async function iniciarSesion() {
     });
 
   if (error) {
-    mensaje.textContent = "Correo o contraseña incorrectos.";
-    return;
-  }
+  mensaje.textContent = "Error: " + error.message;
+  console.error(error);
+  return;
+}
 
   mensaje.textContent = "¡Inicio de sesión correcto!";
 
